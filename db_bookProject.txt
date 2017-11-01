@@ -1,2 +1,69 @@
 CREATE DATABASE db_bookProject;
 
+
+/* --------------------------------------------------------
+					TABLE CREATION
+----------------------------------------------------------*/
+
+
+CREATE TABLE tbl_BOOK (
+	book_id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	book_title VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tbl_LIBRARY_BRANCH (
+	branch_id INT NOT NULL IDENTITY(1,1),
+	branch_name VARCHAR (50) NOT NULL,
+	branch_address VARCHAR(50),
+	PRIMARY KEY (branch_id)
+);
+
+
+
+
+
+
+
+
+
+/* --------------------------------------------------------
+					TABLE INSERTS
+----------------------------------------------------------*/
+
+INSERT INTO tbl_BOOK
+	(book_title)
+	VALUES
+	('The Lost Tribe'),
+	('The Bed Book'),
+	('The Song Book'),
+	('The Choice Book'),
+	('The Dog Book'),
+	('The Cat Book'),
+	('The Train Book'),
+	('The Grass Book'),
+	('The Stick Book'),
+	('The Green Book'),
+	('The Tree Book'),
+	('The Desk Book'),
+	('The Window Book'),
+	('The Ocean Book'),
+	('The Forest Book'),
+	('The Wing Book'),
+	('The Spoon Book'),
+	('The Fork Book'),
+	('The Lander Book'),
+	('The Cloud Book')
+;
+
+
+
+
+
+
+
+
+
+
+SELECT *
+FROM tbl_LIBRARY_BRANCH
+;
