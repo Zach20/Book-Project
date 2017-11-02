@@ -13,13 +13,24 @@ CREATE TABLE tbl_BOOK (
 
 CREATE TABLE tbl_LIBRARY_BRANCH (
 	branch_id INT NOT NULL IDENTITY(1,1),
-	branch_name VARCHAR (50) NOT NULL,
+	branch_name VARCHAR (50),
 	branch_address VARCHAR(50),
 	PRIMARY KEY (branch_id)
 );
 
+CREATE TABLE tbl_BOOK_AUTHORS (
+	book_id INT NOT NULL IDENTITY(1,1),
+	author_name VARCHAR(50) NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES tbl_BOOK(book_id)
+);
 
-
+CREATE TABLE tbl_BOOK_COPIES (
+	book_id INT NOT NULL IDENTITY(1,1),
+	branch_id INT,
+	no_of_copies INT NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES tbl_BOOK(book_id),
+	FOREIGN KEY (branch_id) REFERENCES tbl_LIBRARY_BRANCH(branch_id)
+);
 
 
 
@@ -55,9 +66,44 @@ INSERT INTO tbl_BOOK
 	('The Cloud Book')
 ;
 
+INSERT INTO tbl_LIBRARY_BRANCH
+	(branch_name, branch_address)
+	VALUES
+	('Sharpstown', '45 Sharp'),
+	('Central', '67 Central'),
+	('South', '34 Downings'),
+	('West', '48 Overstreet')
+;
 
+INSERT INTO tbl_BOOK_AUTHORS
+	(author_name)
+	VALUES
+	('Elizabeth J. Garney'),
+	('Beverly J. Andersen'),
+	('Keith E. Clatterbuck'),
+	('David V. Hawkins'),
+	('Marsha S. Carlberg'),
+	('Danny T. Waller'),
+	('Betty J. Chinn'),
+	('Armando C. McGonagle'),
+	('Gerald M. Near'),
+	('Samuel A. Emery')
+;
 
-
+INSERT INTO tbl_BOOK_COPIES
+	(no_of_copies)
+	VALUES
+	(2),
+	(2),
+	(2),
+	(2),
+	(2),
+	(2),
+	(2),
+	(2),
+	(2),
+	(2)
+;
 
 
 
@@ -65,5 +111,16 @@ INSERT INTO tbl_BOOK
 
 
 SELECT *
-FROM tbl_LIBRARY_BRANCH
+FROM tbl_BOOK_COPIES
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_COPIES.branch_id = tbl_LIBRARY_BRANCH.branch_id
 ;
+
+sp_help [tbl_BOOK]
+
+
+SELECT *
+FROM tbl_BOOK_COPIES
+;
+
+
+DROP TABLE tbl_BOOK_COPIES;
