@@ -1,0 +1,211 @@
+CREATE DATABASE db_bookProject;
+
+USE db_bookProject;
+
+/* --------------------------------------------------------
+					TABLE CREATION
+----------------------------------------------------------*/
+
+
+CREATE TABLE tbl_BOOK (
+	book_id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	book_title VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tbl_LIBRARY_BRANCH (
+	branch_id INT NOT NULL IDENTITY(1,1),
+	branch_name VARCHAR (50),
+	branch_address VARCHAR(50),
+	PRIMARY KEY (branch_id)
+);
+
+CREATE TABLE tbl_BORROWER (
+	borrower_card_no INT NOT NULL,
+	borrower_name VARCHAR(50),
+	borrower_address VARCHAR(50),
+	borrower_phone VARCHAR(50),
+	no_books_loaned INT NOT NULL,
+	PRIMARY KEY (borrower_card_no)
+);
+
+CREATE TABLE tbl_BOOK_AUTHORS (
+	book_id INT NOT NULL IDENTITY(1,1),
+	author_name VARCHAR(50) NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES tbl_BOOK(book_id)
+);
+
+CREATE TABLE tbl_BOOK_COPIES (
+	book_id INT NOT NULL,
+	branch_id INT,
+	no_of_copies INT NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES tbl_BOOK(book_id),
+	FOREIGN KEY (branch_id) REFERENCES tbl_LIBRARY_BRANCH(branch_id)
+);
+
+CREATE TABLE tbl_BOOK_LOANS (
+	book_id INT NOT NULL,
+	branch_id INT,
+	card_no INT NOT NULL,
+	date_out VARCHAR(50),
+	due_date VARCHAR(50),
+	FOREIGN KEY(book_id) REFERENCES tbl_BOOK(book_id),
+	FOREIGN KEY(branch_id) REFERENCES tbl_LIBRARY_BRANCH(branch_id),
+	FOREIGN KEY(card_no) REFERENCES tbl_BORROWER(borrower_card_no)
+);
+
+DROP TABLE tbl_BOOK, tbl_LIBRARY_BRANCH, tbl_BORROWER;
+
+DROP TABLE tbl_BOOK_AUTHORS, tbl_BOOK_COPIES, tbl_BOOK_LOANS;
+
+/* --------------------------------------------------------
+					TABLE INSERTS
+----------------------------------------------------------*/
+
+INSERT INTO tbl_BOOK
+	(book_title)
+	VALUES
+	('The Lost Tribe'),
+	('IT'),
+	('The Song Book'),
+	('The Choice Book'),
+	('The Dog Book'),
+	('The Cat Book'),
+	('The Train Book'),
+	('The Grass Book'),
+	('The Stick Book'),
+	('The Green Book'),
+	('The Tree Book'),
+	('The Desk Book'),
+	('The Window Book'),
+	('The Ocean Book'),
+	('The Forest Book'),
+	('The Wing Book'),
+	('The Spoon Book'),
+	('The Fork Book'),
+	('The Lander Book'),
+	('The Cloud Book')
+;
+
+INSERT INTO tbl_LIBRARY_BRANCH
+	(branch_name, branch_address)
+	VALUES
+	('Sharpstown', '45 Sharp'),
+	('Central', '67 Central'),
+	('South', '34 Downings'),
+	('West', '48 Overstreet')
+;
+
+INSERT INTO tbl_BORROWER
+	(borrower_card_no, borrower_name, borrower_address, borrower_phone, no_books_loaned)
+	VALUES
+	(1, 'Jim', '662 Hart Ridge Road', '202-555-0132', 6),
+	(2, 'Jack', '4815 Pretty Lane', '202-555-0133', 8),
+	(3, 'Bob', '3707 Cheshire Road', '202-555-0111', 2),
+	(4, 'Stacey', '1374 Harry Place', '202-555-0142', 1),
+	(5, 'Emily', '3242 Roosevelt Wilson Lane', '202-555-0188', 1),
+	(6, 'Stan', '1927 Science Center Drive', '202-555-0170', 5),
+	(7, 'Emma', '4208 Elk Avenue', '202-555-0167', 2)
+;
+
+INSERT INTO tbl_BOOK_AUTHORS
+	(author_name)
+	VALUES
+	('Elizabeth J. Garney'),
+	('Beverly J. Andersen'),
+	('Keith E. Clatterbuck'),
+	('David V. Hawkins'),
+	('Marsha S. Carlberg'),
+	('Danny T. Waller'),
+	('Betty J. Chinn'),
+	('Armando C. McGonagle'),
+	('Gerald M. Near'),
+	('Samuel A. Emery')
+;
+
+INSERT INTO tbl_BOOK_COPIES
+	(book_id, branch_id, no_of_copies)
+	VALUES
+	(1, 1, 2),
+	(2, 2, 2),
+	(3, 3, 2),
+	(4, 4, 2),
+	(5, 1, 2),
+	(6, 2, 2),
+	(7, 3, 2),
+	(8, 4, 2),
+	(9, 1, 2),
+	(10, 2, 2)
+;
+
+INSERT INTO tbl_BOOK_LOANS
+	(book_id, branch_id, card_no, date_out, due_date)
+	VALUES
+	(1, 1, 1, '5/6', '7/4'),
+	(2, 2, 2, '5/3', '4/4'),
+	(3, 3, 3, '3/5', '5/1'),
+	(4, 4, 4, '6/4', '1/5'),
+	(5, 1, 5, '3/2', '3/6'),
+	(6, 2, 6, '6/7', '1/2'),
+	(7, 3, 7, '6/4', '5/1'),
+	(8, 4, 1, '4/2', '6/1'),
+	(9, 1, 2, '4/6', '1/6'),
+	(10, 2, 3, '7/4', '2/4'),
+	(11, 3, 4, '5/6', '5/5'),
+	(12, 4, 5, '6/4', '7/1'),
+	(13, 1, 6, '4/5', '1/5'),
+	(14, 2, 7, '6/4', '2/2'),
+	(15, 3, 1, '4/6', '4/4'),
+	(16, 4, 2, '3/5', '4/2'),
+	(17, 1, 3, '9/2', '0/2'),
+	(18, 2, 4, '9/4', '9/6'),
+	(19, 3, 5, '8/5', '2/8'),
+	(20, 4, 6, '3/6', '4/1'),
+	(1, 1, 7, '4/6', '4/6'),
+	(2, 2, 1, '5/7', '1/4'),
+	(3, 3, 2, '4/2', '5/2'),
+	(4, 4, 3, '2/2', '4/7'),
+	(5, 1, 4, '1/1', '4/4'),
+	(6, 2, 5, '1/2', '6/2'),
+	(7, 3, 6, '1/3', '4/5'),
+	(8, 4, 7, '2/3', '3/4'),
+	(9, 1, 1, '8/7', '1/2'),
+	(10, 2, 2, '7/5', '2/1'),
+	(11, 3, 3, '7/5', '2/4'),
+	(12, 4, 4, '5/3', '5/5'),
+	(13, 1, 5, '3/6', '6/2'),
+	(14, 2, 6, '5/5', '6/2'),
+	(15, 3, 7, '3/3', '7/2'),
+	(16, 4, 1, '2/2', '1/5'),
+	(17, 1, 2, '2/7', '3/1'),
+	(18, 2, 3, '6/1', '7/1'),
+	(19, 3, 4, '5/7', '5/7'),
+	(20, 4, 5, '6/9', '4/5'),
+	(1, 1, 6, '7/2', '3/4'),
+	(2, 2, 7, '2/2', '9/4'),
+	(3, 3, 1, '4/6', '5/8'),
+	(4, 4, 2, '1/3', '5/7'),
+	(5, 1, 3, '4/7', '2/1'),
+	(6, 2, 4, '4/1', '2/3'),
+	(7, 3, 5, '1/3', '4/7'),
+	(8, 4, 6, '1/3', '4/1'),
+	(9, 1, 7, '4/7', '1/3'),
+	(10, 2, 1, '3/7', '1/3')
+;
+
+
+
+
+SELECT *
+FROM tbl_BOOK_COPIES
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_COPIES.branch_id = tbl_LIBRARY_BRANCH.branch_id
+;
+
+sp_help [tbl_BOOK_COPIES]
+
+
+SELECT *
+FROM tbl_BOOK_COPIES
+;
+
+
+DROP TABLE tbl_BOOK;
