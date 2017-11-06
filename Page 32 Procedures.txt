@@ -1,0 +1,83 @@
+1.USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberOne
+AS
+SELECT no_of_copies
+FROM tbl_BOOK
+INNER JOIN tbl_BOOK_COPIES ON tbl_BOOK.book_id = tbl_BOOK_COPIES.book_id
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_COPIES.branch_id = tbl_LIBRARY_BRANCH.branch_id
+WHERE book_title = 'The Lost Tribe' AND branch_name = 'Sharpstown'
+GO
+
+2.USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberTwo
+AS
+SELECT no_of_copies, branch_name
+FROM tbl_BOOK
+INNER JOIN tbl_BOOK_COPIES ON tbl_BOOK.book_id = tbl_BOOK_COPIES.book_id
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_COPIES.branch_id = tbl_LIBRARY_BRANCH.branch_id
+WHERE book_title = 'The Lost Tribe'
+GO
+
+3. USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberThree
+AS
+SELECT borrower_name
+FROM tbl_BOOK
+INNER JOIN tbl_BOOK_LOANS ON tbl_BOOK.book_id = tbl_BOOK_LOANS.book_id
+INNER JOIN tbl_BORROWER ON tbl_BOOK_LOANS.card_no = tbl_BORROWER.borrower_card_no
+WHERE no_books_loaned = 0
+GO
+
+4. USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberFour
+AS
+SELECT book_title, borrower_name, borrower_address
+FROM tbl_BOOK
+INNER JOIN tbl_BOOK_LOANS ON tbl_BOOK.book_id = tbl_BOOK_LOANS.book_id
+INNER JOIN tbl_BORROWER ON tbl_BOOK_LOANS.card_no = tbl_BORROWER.borrower_card_no
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_LOANS.branch_id = tbl_LIBRARY_BRANCH.branch_id
+WHERE branch_name = 'Sharpstown' AND due_date = '11/1'
+GO
+
+5. USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberFive
+AS
+SELECT branch_name, tbl_BOOK.book_id, tbl_LIBRARY_BRANCH.branch_id
+FROM tbl_BOOK
+INNER JOIN tbl_BOOK_LOANS ON tbl_BOOK.book_id = tbl_BOOK_LOANS.book_id
+INNER JOIN tbl_BORROWER ON tbl_BOOK_LOANS.card_no = tbl_BORROWER.borrower_card_no
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_LOANS.branch_id = tbl_LIBRARY_BRANCH.branch_id
+GO
+
+6. USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberSix
+AS
+SELECT borrower_name, borrower_address, no_books_loaned
+FROM tbl_BORROWER
+WHERE no_books_loaned > 5
+GO
+
+7. USE db_bookProject
+GO
+
+CREATE PROCEDURE dbo.uspNumberSeven
+AS
+SELECT tbl_BOOK.book_title
+FROM tbl_BOOK
+INNER JOIN tbl_BOOK_LOANS ON tbl_BOOK.book_id = tbl_BOOK_LOANS.book_id
+INNER JOIN tbl_BORROWER ON tbl_BOOK_LOANS.card_no = tbl_BORROWER.borrower_card_no
+INNER JOIN tbl_LIBRARY_BRANCH ON tbl_BOOK_LOANS.branch_id = tbl_LIBRARY_BRANCH.branch_id
+WHERE book_title = 'IT' AND branch_name = 'Central'
+GO
